@@ -50,7 +50,7 @@ void  OSTimeDly (INT16U ticks)
 #endif
 
     //【注释】中断处理程序汇总不可进行会引起任务调度的操作
-    //中断嵌套级别
+    //中断调用出不来
     if (OSIntNesting > 0) {                       /* See if trying to call from an ISR                  */
         return;
     }
@@ -138,6 +138,7 @@ INT8U  OSTimeDlyHMSM (INT8U hours, INT8U minutes, INT8U seconds, INT16U ms)
     ticks = ticks & 0xFFFFL;                     /* Obtain  the fractional number of ticks             */
     OSTimeDly((INT16U)ticks);
     while (loops > 0) {
+        //65535一次最大延时换算
         OSTimeDly((INT16U)32768u);
         OSTimeDly((INT16U)32768u);
         loops--;

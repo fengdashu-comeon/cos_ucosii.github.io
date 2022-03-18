@@ -13,7 +13,7 @@
 * LICENSING TERMS:
 * ---------------
 *   uC/OS-II is provided in source form for FREE evaluation, for educational use or for peaceful research.
-* If you plan on using  uC/OS-II  in a commercial product you need to contact Micriµm to properly license
+* If you plan on using  uC/OS-II  in a commercial product you need to contact Micri m to properly license
 * its use in your product. We provide ALL the source code for your convenience and to help you experience
 * uC/OS-II.   The fact that the  source is provided does  NOT  mean that you can use it without  paying a
 * licensing fee.
@@ -95,8 +95,8 @@ extern "C" {
 
 #define  OS_EVENT_EN           (((OS_Q_EN > 0) && (OS_MAX_QS > 0)) || (OS_MBOX_EN > 0) || (OS_SEM_EN > 0) || (OS_MUTEX_EN > 0))
 
-#define  OS_TCB_RESERVED        ((OS_TCB *)1)		// ´´½¨ÈÎÎñÇ°ÏÈ½«ÏàÓ¦prioµÄÈÎÎñÉèÖÃÎªOS_TCB_RESERVED
-							// ±íÃ÷ÓĞÈÎÎñÕıÔÚ´´½¨ÖĞ
+#define  OS_TCB_RESERVED        ((OS_TCB *)1)		//        
+							//             
 
 /*$PAGE*/
 /*
@@ -600,7 +600,7 @@ typedef struct os_stk_data {
 typedef struct os_tcb {
     OS_STK          *OSTCBStkPtr;           /* Pointer to current top of stack                         */
 
-// taskµÄextension¹¦ÄÜÏà¹ØÌØĞÔ
+// 
 #if OS_TASK_CREATE_EXT_EN > 0
     void            *OSTCBExtPtr;           /* Pointer to user definable data for TCB extension        */
     OS_STK          *OSTCBStkBottom;        /* Pointer to bottom of stack                              */
@@ -632,15 +632,15 @@ typedef struct os_tcb {
 #endif
 
     INT16U           OSTCBDly;              /* Nbr ticks to delay task or, timeout waiting for event   */
-    INT8U            OSTCBStat;  	// Óë¹ÒÆğÈÎÎñÓĞ¹Ø           /* Task      status                                        */
+    INT8U            OSTCBStat;  	//           /* Task      status                                        */
     INT8U            OSTCBStatPend;         /* Task PEND status                                        */
     INT8U            OSTCBPrio;             /* Task priority (0 == highest)                            */
 
-    INT8U            OSTCBX; // ÓÉÓÅÏÈ¼¶¼ÆËã³öµÄ×éÖĞµÄbitÎ»ÖÃ  /* Bit position in group  corresponding to task priority   */
-    INT8U            OSTCBY; // ÓÉÓÅÏÈ¼¶¼ÆËã³öµÄ¾ÍĞ÷±íÏÂ±ê     /* Index into ready table corresponding to task priority   */
+    INT8U            OSTCBX; //   /* Bit position in group  corresponding to task priority   */
+    INT8U            OSTCBY; //      /* Index into ready table corresponding to task priority   */
 #if OS_LOWEST_PRIO <= 63
-    INT8U            OSTCBBitX; // ¾ÍĞ÷±í²Ù×÷ÑÚÂë£¬&    /* Bit mask to access bit position in ready table          */
-    INT8U            OSTCBBitY; // ¾ÍĞ÷×é    /* Bit mask to access bit position in ready group          */
+    INT8U            OSTCBBitX; // &    /* Bit mask to access bit position in ready table          */
+    INT8U            OSTCBBitY; //     /* Bit mask to access bit position in ready group          */
 #else
     INT16U           OSTCBBitX;             /* Bit mask to access bit position in ready table          */
     INT16U           OSTCBBitY;             /* Bit mask to access bit position in ready group          */
@@ -709,11 +709,11 @@ typedef  struct  os_tmr_wheel {
 *********************************************************************************************************
 */
 
-OS_EXT  INT32U            OSCtxSwCtr;  // ÉÏÏÂÎÄÇĞ»»´ÎÊı             /* Counter of number of context switches           */
+OS_EXT  INT32U            OSCtxSwCtr;  // ä»»åŠ¡åˆ‡æ¢æ¬¡æ•°           /* Counter of number of context switches           */
 
 #if (OS_EVENT_EN) && (OS_MAX_EVENTS > 0)
-OS_EXT  OS_EVENT         *OSEventFreeList;          /* Pointer to list of free EVENT control blocks    */
-OS_EXT  OS_EVENT          OSEventTbl[OS_MAX_EVENTS];/* Table of EVENT control blocks                   */
+OS_EXT  OS_EVENT         *OSEventFreeList;          //ç©ºé—²é“¾è¡¨æŒ‡é’ˆ/* Pointer to list of free EVENT control blocks    */
+OS_EXT  OS_EVENT          OSEventTbl[OS_MAX_EVENTS];//å…¨å±€eventæ•°ç»„/* Table of EVENT control blocks                   */
 #endif
 
 #if (OS_FLAG_EN > 0) && (OS_MAX_FLAGS > 0)
@@ -721,12 +721,12 @@ OS_EXT  OS_FLAG_GRP       OSFlagTbl[OS_MAX_FLAGS];  /* Table containing event fl
 OS_EXT  OS_FLAG_GRP      *OSFlagFreeList;           /* Pointer to free list of event flag groups       */
 #endif
 
-#if OS_TASK_STAT_EN > 0
+#if OS_TASK_STAT_EN > 0  //cpuç»Ÿè®¡ä»»åŠ¡
 OS_EXT  INT8U             OSCPUUsage;               /* Percentage of CPU used                          */
-OS_EXT  INT32U            OSIdleCtrMax; // 1ÃëÄÚ¿ÕÏĞÈÎÎñ¼ÆÊıÆ÷¿É´ïµÄ×î´óÖµ  /* Max. value that idle ctr can take in 1 sec.     */
-OS_EXT  INT32U            OSIdleCtrRun; // 1ÃëÇ°¿ÕÏĞÈÎÎñ¼ÆÊıÆ÷Öµ  /* Val. reached by idle ctr at run time in 1 sec.  */
-OS_EXT  BOOLEAN           OSStatRdy;    // ÊÇ·ñÖ´ĞĞÍ³¼ÆÈÎÎñµÄ±êÊ¶  /* Flag indicating that the statistic task is rdy  */
-OS_EXT  OS_STK            OSTaskStatStk[OS_TASK_STAT_STK_SIZE];      /* Statistics task stack          */
+OS_EXT  INT32U            OSIdleCtrMax; //1sç©ºé—²è®¡æ•°å™¨æœ€å¤§å€¼/* Max. value that idle ctr can take in 1 sec.     */
+OS_EXT  INT32U            OSIdleCtrRun; //1sç©ºé—²è®¡æ•°å™¨ /* Val. reached by idle ctr at run time in 1 sec.  */
+OS_EXT  BOOLEAN           OSStatRdy;    //å½“å‰ä»»åŠ¡çŠ¶æ€è¡¨ç¤º /* Flag indicating that the statistic task is rdy  */
+OS_EXT  OS_STK            OSTaskStatStk[OS_TASK_STAT_STK_SIZE]; //ç»Ÿè®¡ä»»åŠ¡æ ˆ     /* Statistics task stack          */
 #endif
 
 OS_EXT  INT8U             OSIntNesting;             /* Interrupt nesting level                         */
@@ -736,8 +736,9 @@ OS_EXT  INT8U             OSLockNesting;            /* Multitasking lock nesting
 OS_EXT  INT8U             OSPrioCur;                /* Priority of current task                        */
 OS_EXT  INT8U             OSPrioHighRdy;            /* Priority of highest priority task               */
 
+//å°±ç»ªç»„å’Œå°±ç»ªç»„è¡¨
 #if OS_LOWEST_PRIO <= 63
-OS_EXT  INT8U             OSRdyGrp; // Èç¹ûÄ³Ò»¸ö×é8¸ö¶¼Î´¾ÍĞ÷(0)£¬ÔòÕâ¸ö×é¶ÔÓ¦µÄbitÒ²Îª0                       /* Ready list group                         */
+OS_EXT  INT8U             OSRdyGrp; //                  /* Ready list group                         */
 OS_EXT  INT8U             OSRdyTbl[OS_RDY_TBL_SIZE];       /* Table of tasks which are ready to run    */
 #else
 OS_EXT  INT16U            OSRdyGrp;                        /* Ready list group                         */
@@ -746,26 +747,26 @@ OS_EXT  INT16U            OSRdyTbl[OS_RDY_TBL_SIZE];       /* Table of tasks whi
 
 OS_EXT  BOOLEAN           OSRunning;                       /* Flag indicating that kernel is running   */
 
-OS_EXT  INT8U             OSTaskCtr;  // ÏµÍ³´´½¨µÄÈÎÎñÊı    /* Number of tasks created                  */
+OS_EXT  INT8U             OSTaskCtr;  //   /* Number of tasks created                  */
 
-OS_EXT  volatile  INT32U  OSIdleCtr;   // ¿ÕÏĞÊ±¼ä¼ÆÊıÆ÷   /* Idle counter                   */
+OS_EXT  volatile  INT32U  OSIdleCtr;   //   /* Idle counter                   */
 
 OS_EXT  OS_STK            OSTaskIdleStk[OS_TASK_IDLE_STK_SIZE];      /* Idle task stack                */
 
 
-OS_EXT  OS_TCB           *OSTCBCur;                        /* Pointer to currently running TCB         */
-OS_EXT  OS_TCB           *OSTCBFreeList;  // Ö¸Ïòfree listµ¥Á´±íµÄÍ·   /* Pointer to list of free TCBs             */
+OS_EXT  OS_TCB           *OSTCBCur;      //å½“å‰ä»»åŠ¡tcbæŒ‡é’ˆ                  /* Pointer to currently running TCB         */
+OS_EXT  OS_TCB           *OSTCBFreeList;  //æŒ‡å‘å¤„äºç©ºé—²æ€tcbçš„æŒ‡é’ˆ  /* Pointer to list of free TCBs             */
 OS_EXT  OS_TCB           *OSTCBHighRdy;                    /* Pointer to highest priority TCB R-to-R   */
-OS_EXT  OS_TCB           *OSTCBList;   // Ö¸ÏòOS_TCBÄÚ²¿µÄË«ÏòÁ´±íµÄÁ´±íÍ·  /* Pointer to doubly linked list of TCBs    */
-OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];// ÓÃprio×öÏÂ±ê²é±íµÃµ½ÏàÓ¦prioµÄÈÎÎñµÄTCBÖ¸Õë/* Table of pointers to created TCBs        */
-OS_EXT  OS_TCB            OSTCBTbl[OS_MAX_TASKS + OS_N_SYS_TASKS]; //   /* Table of TCBs                  */
+OS_EXT  OS_TCB           *OSTCBList;   ///* Pointer to doubly linked list of TCBs    */
+OS_EXT  OS_TCB           *OSTCBPrioTbl[OS_LOWEST_PRIO + 1];///* Table of pointers to created TCBs        */
+OS_EXT  OS_TCB            OSTCBTbl[OS_MAX_TASKS + OS_N_SYS_TASKS]; //æ‰€æœ‰ä»»åŠ¡çš„æ•°ç»„   /* Table of TCBs                  */
 
 #if OS_TICK_STEP_EN > 0
 OS_EXT  INT8U             OSTickStepState;          /* Indicates the state of the tick step feature    */
 #endif
 
 #if (OS_MEM_EN > 0) && (OS_MAX_MEM_PART > 0)
-OS_EXT  OS_MEM           *OSMemFreeList;            /* Pointer to free list of memory partitions       */
+OS_EXT  OS_MEM           *OSMemFreeList;           //å†…å­˜åˆ†åŒºç®¡ç† /* Pointer to free list of memory partitions       */
 OS_EXT  OS_MEM            OSMemTbl[OS_MAX_MEM_PART];/* Storage for memory partition manager            */
 #endif
 
@@ -775,7 +776,7 @@ OS_EXT  OS_Q              OSQTbl[OS_MAX_QS];        /* Table of QUEUE control bl
 #endif
 
 #if OS_TIME_GET_SET_EN > 0
-OS_EXT  volatile  INT32U  OSTime;   // ÒÔticksÎªµ¥Î»µÄÏµÍ³Ê±¼ä    /* Current value of system time (in ticks)         */
+OS_EXT  volatile  INT32U  OSTime;   //  /* Current value of system time (in ticks)         */
 #endif
 
 #if OS_TMR_EN > 0
@@ -793,7 +794,7 @@ OS_EXT  OS_STK            OSTmrTaskStk[OS_TASK_TMR_STK_SIZE];
 OS_EXT  OS_TMR_WHEEL      OSTmrWheelTbl[OS_TMR_CFG_WHEEL_SIZE];
 #endif
 
-extern  INT8U   const     OSUnMapTbl[256];          /* Priority->Index    lookup table                 */
+extern  INT8U   const     OSUnMapTbl[256];         //å¸¸æ•°è¡¨è¾…åŠ©è®¡ç®—æœ€é«˜ä¼˜å…ˆçº§ /* Priority->Index    lookup table                 */
 
 /*$PAGE*/
 /*
@@ -1921,7 +1922,7 @@ void          OSCtxSw                 (void);
     #error "OS_CFG.H, OS_TASK_DEL_EN must be disabled for safety-critical release code"
     #endif
 #endif
-
+//è¾…åŠ©ç¼–è¯‘ä¿æŠ¥é”™
 #if    OS_CRITICAL_METHOD != 3
 #error "OS_CPU.H, OS_CRITICAL_METHOD must be type 3 for safety-critical release code"
 #endif
